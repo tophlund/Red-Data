@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Enforce TypeScript strict mode; disallow any except in explicit exceptions with justification comments.
+
+Use ESLint with a defined config extending eslint:recommended and plugin:@typescript-eslint/recommended; fail builds on lint errors.
+
+Name files to match default exports; use .ts or .tsx extensions based on content.
+
+Organize imports: external packages first, internal aliases second, relative imports last; sort alphabetically within groups.
+
+Apply Prettier formatting: 2-space indentation, single quotes, trailing commas in multiline, max line length 80.
+
+Disallow console statements; use a centralized logger utility.
+
+Use explicit return types on all functions and React components.
+
+Avoid inline anonymous functions in JSX; extract event handlers to named functions.
+
+Document complex logic with inline comments; avoid commented-out code blocks.
+
+
+Require commit messages to follow Conventional Commits format.

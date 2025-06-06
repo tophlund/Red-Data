@@ -1,0 +1,53 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Define all entities in Prisma schema under prisma/schema.prisma; use singular, PascalCase model names.
+
+Use UUID (String @id @default(uuid())) for primary keys on all models.
+
+Name fields in camelCase; include explicit types and constraints (e.g., String @unique, Int @default(0)).
+
+Model relationships with explicit @relation attributes; avoid implicit foreign keys.
+
+Enforce referential integrity: use onDelete: Cascade only where orphaned records are acceptable.
+
+Create separate model for Metrics (Metric), Models (UserModel), Users (User), and Components (ModelComponent).
+
+For many-to-many associations, define join tables as explicit models (e.g., ModelMetric with @id([modelId, metricId])).
+
+Include createdAt DateTime @default(now()) and updatedAt DateTime @updatedAt fields on all models.
+
+Use enums for fixed sets: define enum MetricCategory { PLAYER TEAM POSITION REF PLAYBOOK } and reference in Metric.
+
+Document each model field in comments above its definition in schema.prisma.
+
+Apply naming convention: foreign key fields end with Id (e.g., userId), relation fields match model name (e.g., user User @relation(fields: [userId], references: [id])).
+
+Store AI suggestions history in separate model AiSuggestion with foreign key to ModelComponent and timestamp.
+
+Define index for frequently queried fields: use @@index([metricCategory]) on Metric and @@index([userId]) on UserModel.
+
+Use soft deletes: include isDeleted Boolean @default(false) on models requiring audit; exclude isDeleted=true by default in queries.
+
+Maintain normalized data: avoid storing derived values; compute aggregates at query time or via materialized views.
+
+Version schema changes using Prisma migrations; commit migration files under prisma/migrations with descriptive folder names.
+
+Enforce data validation at schema level: use @db.VarChar(length) to limit string lengths where necessary.
+
+For lookup tables (e.g., Position, Team), seed static data via prisma/seed.ts; import in CI environment.
+
+Document entity-relationship diagram under docs/diagrams/data-model.svg; update with each migration.
+
+Disallow raw SQL in application; generate all queries through Prisma Client and its generated types.
+
+
+
+
+
+
+
+
+

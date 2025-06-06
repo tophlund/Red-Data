@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Write unit tests for all utility functions; require 100% branch coverage for critical logic.
+
+Use React Testing Library to test components: verify rendering, user interactions, and state changes.
+
+Mock external API calls (OpenAI, database) in tests; isolate unit tests from network.
+
+Create integration tests for API routes using Supertest; verify response schemas and status codes.
+
+Configure CI to run tests on every pull request; fail merge if coverage drops below 80%.
+
+Enforce naming convention: test files mirror source file paths with .test.ts or .test.tsx suffix.
+
+Use snapshot tests sparingly; only for stable UI components unlikely to change frequently.
+
+Include end-to-end tests with Playwright: focus on critical user flows (login, model creation, save/share).
+
+Run accessibility tests in CI using axe-core; fail build on critical violations.
+
+Maintain test data fixtures in tests/fixtures; reset test database before each test suite.
+

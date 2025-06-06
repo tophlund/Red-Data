@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Centralize color palette in app/styles/theme.ts; define semantic tokens (e.g., primary, secondary, background).
+
+Use CSS variables for theme overrides; support light and dark modes with prefers-color-scheme media query.
+
+Define font scale: base=16px, small=14px, large=20px, xlarge=24px; apply via utility classes.
+
+Button radii: apply rounded-lg for primary, rounded-md for secondary.
+
+Shadows: use shadow-sm for cards, shadow-md for modals, shadow-lg for overlays.
+
+Maintain a spacing scale: use multiples of 0.25rem; avoid arbitrary margins or paddings.
+
+Icons: use a shared icon library (e.g., lucide-react); standardize icon size to 1.5rem unless context demands otherwise.
+
+Ensure color contrast ratios meet WCAG AA: check text and background pairings.
+
+Animate transitions: use CSS transitions for hover states; keep duration under 200ms.
+
+
+Store global styles in app/styles/global.css; avoid inline style overrides.

@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Abstract external API calls behind service interfaces; place under app/services/thirdParty/.
+
+Validate responses from OpenAI against openaiSchema; reject if missing expected fields.
+
+Throttle requests to OpenAI: limit to 60 requests per minute per API key.
+
+Secure API keys in environment; rotate keys every six months.
+
+Mock third-party services in tests; use Nock or equivalent.
+
+Log third-party request latencies; alert if latency exceeds 500ms.
+
+Version pin SDKs; avoid major version upgrades without compatibility testing.
+
+Use retry logic with exponential backoff for transient network errors (max 3 retries).
+
+Encrypt payloads in transit; require HTTPS for all external calls.
+
+
+Document integration endpoints and usage patterns in docs/thirdParty.md.

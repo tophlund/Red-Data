@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Create a README.md at project root. Include project purpose, setup steps, and folder structure.
+
+Require a docs/ folder for detailed guides. Inside docs/, include:
+
+architecture.md describing overall app architecture.
+
+data-models.md listing database schemas and entity relationships.
+
+api-spec.md detailing all API endpoints with request/response formats.
+
+Write JSDoc comments for every function, class, and component. Include @param, @returns, and brief descriptions.
+
+Enforce TypeScript interfaces for all domain entities. Reference interfaces in documentation examples.
+
+Maintain a CHANGELOG.md. Record every feature addition, bug fix, and breaking change with version tags.
+
+Use Markdown linting rules: headings must follow hierarchical order; use fenced code blocks with language tags; wrap lines at 80 characters.
+
+Document environment variables in docs/env.md. List variable names, purposes, and example values.
+
+For each route file under app/routes, include a comment block at top: route purpose, HTTP method, required permissions.
+
+Update documentation whenever code changes: add a reminder to commit doc updates with code commits.
+
+
+Store all design diagrams (UML, data flow) under docs/diagrams/. Name files descriptively and reference them in architecture.md.

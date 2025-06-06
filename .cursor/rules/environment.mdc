@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Require .env.example at project root listing all variables without values.
+
+Load environment variables using dotenv in development; throw error if required variables missing.
+
+Define variables: DATABASE_URL, OPENAI_API_KEY, NEXTAUTH_SECRET, CORS_ORIGINS, REDIS_URL.
+
+Separate environments: development, staging, production; enforce NODE_ENV check in code.
+
+Disallow hard-coded secrets; validate values at startup (e.g., URL format).
+
+Use .env.local for local overrides; exclude from version control.
+
+Document variable purpose and expected format in docs/env.md.
+
+Encrypt sensitive variables in CI provider; inject at build time.
+
+Configure logging levels via LOG_LEVEL variable (debug, info, warn, error).
+
+
+Use feature flags via environment variables (FEATURE_AI_SUGGESTIONS=true).

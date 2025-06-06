@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Centralize error handling in app/utils/errorHandler.ts; catch unhandled exceptions in loaders and actions.
+
+Define custom error classes (ValidationError, AuthError, NotFoundError) with standard structure { code, message, status }.
+
+Log errors with stack traces to a centralized logging service (e.g., Datadog); include request context.
+
+Return user-friendly error messages in API responses; avoid exposing internal details.
+
+Implement client-side error boundary components to catch rendering errors; display fallback UI.
+
+Log warning-level events for deprecated API usage or performance warnings.
+
+Rotate logs daily; retain logs for 90 days.
+
+Alert on critical errors via monitoring tool triggers; configure threshold-based alerts for 5xx errors.
+
+Track error rates and types in dashboard; review monthly to identify hotspots.
+
+
+Include correlation IDs in logs and responses to trace requests across services.

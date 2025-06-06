@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Code-split builder bundle: lazy-load non-critical components using dynamic import().
+
+Minimize initial data payload: paginate metric lists; lazy-load detailed metric data on demand.
+
+Use memoization (React.memo, useMemo, useCallback) to prevent unnecessary renders.
+
+Debounce user input in search fields with a 300ms delay.
+
+Optimize database queries: use Prisma’s select to fetch only required fields.
+
+Index frequently queried columns in database; audit slow queries quarterly.
+
+Enable gzip or brotli compression for responses at server level.
+
+Serve static assets with appropriate cache headers; invalidate on deploy via hashed filenames.
+
+Use WebSocket or Server-Sent Events for real-time AI suggestion updates instead of polling.
+
+

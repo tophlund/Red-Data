@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Design all screens to follow a 12-column responsive grid; breakpoint definitions: sm=640px, md=768px, lg=1024px, xl=1280px.
+
+Use Tailwind CSS utility classes consistently; avoid custom CSS unless absolutely necessary.
+
+All interactive elements must use accessible ARIA roles and labels.
+
+Drag-and-drop interactions: use HTML5 drag events with clear visual drop targets and fallback for touch devices.
+
+Builder canvas: render metric cards with clear icons, tooltips on hover displaying metric descriptions.
+
+Sidebar panels: should collapse and expand; use concise headings and consistent typography.
+
+Modal components: trap focus, allow ESC to close, include descriptive titles and close buttons.
+
+Button styles: primary actions use solid background, secondary actions use outlined style; disable on invalid states.
+
+Forms: label each field explicitly, display inline validation errors, prevent form submission until valid.
+
+
+Provide visual feedback for asynchronous operations: spinner or skeleton loader for data fetches.

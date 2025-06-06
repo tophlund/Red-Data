@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Follow WCAG 2.1 AA guidelines; audit UI with automated tools and manual testing.
+
+Ensure all images have meaningful alt attributes; decorative images marked aria-hidden="true".
+
+Use semantic HTML tags (<button>, <header>, <nav>, <main>) for structure.
+
+Ensure keyboard navigability: all interactive elements must be reachable via Tab.
+
+Provide visible focus indicators (e.g., outline) on focusable elements.
+
+Use ARIA roles and labels for custom components (e.g., role="dialog", aria-modal="true" for modals).
+
+Ensure form fields have associated <label> elements; use aria-describedby for additional context.
+
+Avoid color-only indicators; combine color with text or icons for state information.
+
+Test UI with screen readers (NVDA, VoiceOver) at least biannually.
+
+
+Include skip-links (<a href="#main">Skip to main content</a>) for screen reader users.

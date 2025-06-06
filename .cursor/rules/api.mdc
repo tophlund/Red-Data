@@ -1,0 +1,53 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Place all API route files under app/routes/api/.
+
+Prefix versioned routes with /v1/, /v2/, etc.; bump version when breaking changes occur.
+
+Name route files by resource and action: e.g., models.index.ts for GET /api/v1/models, models.create.ts for POST.
+
+Require all routes to export loader for GET requests and action for POST/PUT/DELETE; reject unsupported HTTP methods.
+
+Validate request bodies against TypeScript schemas defined in app/utils/schemas/; return 400 if validation fails.
+
+Enforce JWT-based authentication: verify token in headers.authorization for protected routes; return 401 if missing or invalid.
+
+Extract user identity in a shared utility (app/utils/auth.ts) and attach to request context; disallow direct token parsing in route files.
+
+Sanitize all incoming parameters: trim strings, parse numbers explicitly, and escape SQL injection vectors before passing to Prisma.
+
+Return JSON responses with a top-level data or error field; on success use { data: <payload> }; on error use { error: { code: <code>, message: <message> } }.
+
+Use HTTP status codes semantically: 200 for success, 201 for creation, 204 for deletion without body, 400 for client errors, 401 for unauthorized, 403 for forbidden, 404 for not found, 500 for server errors.
+
+Implement pagination on collection endpoints: accept page and limit query parameters; include meta: { total, page, limit } in response.
+
+Limit query results by default limit=50; enforce a max limit=100 to prevent excessive load.
+
+Document each endpoint in docs/api-spec.md: include path, method, parameters, request body schema, response schema, and authentication requirement.
+
+Handle exceptions in a central error handler (app/utils/errorHandler.ts); convert thrown errors into standardized JSON error responses.
+
+Log API requests and responses at DEBUG level in development; log only errors in production.
+
+Require CORS configuration in app/utils/cors.ts: allow origins specified in .env; reject all others.
+
+Enforce rate limiting per IP: maximum 100 requests per minute; return 429 when exceeded.
+
+Cache idempotent GET responses using HTTP Cache-Control headers: public, max-age=60.
+
+Reject any request containing fields not defined in the schema; do not silently ignore extra fields.
+
+Version breaking change endpoints by adding /v2/ folder; maintain older versions until migration is complete.
+
+
+
+
+
+
+
+
+

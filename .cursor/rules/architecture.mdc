@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Define system layers: presentation (Remix routes and components), business logic (services and controllers), data access (Prisma repositories), and integration (OpenAI and external APIs).
+
+Establish a single entry point for server-side logic under app/routes/_server.ts; export shared loader and action utilities.
+
+Maintain a diagram of modules and dependencies in docs/diagrams/architecture/architecture.svg; update with every architectural change.
+
+Enforce separation of concerns: no direct database calls in React components; use loaders or actions to fetch data.
+
+Require all data access through Prisma client instances configured in app/utils/prisma.ts; disallow raw SQL queries.
+
+Define service classes for metric processing in app/services/metricsService.ts; methods must accept domain objects and return plain data transfer objects.
+
+Use domain-specific folder structure: app/models/ for TypeScript interfaces, app/services/ for business logic, app/repositories/ for data access, and app/controllers/ for request handling.
+
+Implement a dependency injection pattern via a servicesRegistry in app/utils/registry.ts; register all services at server startup.
+
+Enforce statelessness for server actions: no in-memory caching; utilize Remix loader caching headers or Redis for cross-instance caching.
+
+Define API contracts in docs/api-spec.md; every change to endpoints must update the contract and version in route filename (e.g., v1/metrics.ts to v2/metrics.ts).
+
+Architect the visual builder as a client-only bundle loaded under /app/routes/builder.tsx; isolate builder logic from server-rendered routes.
+
+Require CI to run architectural validation: linting rules must flag forbidden layer violations (e.g., service calling React component).
+
+Define messaging format for OpenAI integration: JSON envelope with { metrics: MetricIdentifier[], context: string }; schema stored in app/utils/openaiSchema.ts.
+
+Enforce Redux or Zustand usage only within builderContext; no global state outside allowed contexts.
+
+
+Document event flows in docs/architecture/eventFlows.md; illustrate drag-and-drop events, AI requests, and model save operations.
