@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Define seed scripts in prisma/seed.ts; use Prisma Client to insert static data (metrics, positions, teams).
+
+Version migrations: run prisma migrate dev for local development; commit generated SQL files.
+
+Maintain separate seed datasets per environment: seed.dev.ts, seed.prod.ts.
+
+Rollback procedure: use prisma migrate resolve to mark migrations applied/unapplied.
+
+Automate seed execution in CI after migrations; ensure idempotent seeds.
+
+Validate seed data uniqueness: enforce constraints in code and schema.
+
+Document migration steps in docs/migrations.md; include rollback commands.
+
+Archive historical migrations; never modify applied migration files.
+
+Test migrations in a clean database in CI; fail build on migration errors.
+
+
+Use migration naming convention with timestamp and description: 20250606_init_metrics.

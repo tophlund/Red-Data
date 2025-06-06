@@ -1,0 +1,32 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Cache metric lists and lookup tables with 5-minute TTL in Redis; update on data changes.
+
+Use HTTP Cache-Control headers for static assets: public, max-age=86400.
+
+Implement server-side response caching for GET /api/v1/metrics with ETag support.
+
+Invalidate cache on model update or metric modification events.
+
+Cache AI suggestion responses for identical metric combinations for 10 minutes.
+
+Use in-memory LRU cache for client-side computations; limit to 100 entries.
+
+Leverage Remix loader caching: set cache-control headers in loader responses.
+
+Monitor cache hit/miss ratios; adjust TTLs based on usage patterns.
+
+Do not cache personalized or sensitive data; restrict to publicly sharable data.
+
+Document caching layers and invalidation logic in docs/caching.md.
+
+
+
+
+
+
+
+

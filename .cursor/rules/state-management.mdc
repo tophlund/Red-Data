@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Use Zustand for global state in builder; define stores in app/stores/.
+
+Separate state slices: metricsStore, userStore, modelStore, uiStore.
+
+Persist critical state (e.g., current model) to localStorage with debounce to avoid performance issues.
+
+Reset state on logout; clear persisted state.
+
+Use immutable updates; avoid direct mutation of state objects.
+
+Derive computed state with selectors; memoize selectors for performance.
+
+Restrict state access to relevant contexts; disallow state usage outside builder components.
+
+Document store APIs with TypeScript interfaces; include usage examples in docs/state.md.
+
+Write unit tests for state actions and selectors; ensure state transitions are predictable.
+
+
+Version persisted state schema; include migration logic for breaking changes.

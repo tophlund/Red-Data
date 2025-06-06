@@ -1,0 +1,25 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Integrate analytics service (e.g., Segment) in client; track key events: model creation, metric addition, AI suggestion seen.
+
+Anonymize user identifiers in telemetry; use hashed IDs.
+
+Send batch event uploads every 30 seconds; avoid excessive network usage.
+
+Capture frontend performance metrics (FID, LCP) and send to monitoring service.
+
+Monitor API performance: record response times and error rates; trigger alerts on 5xx spike.
+
+Implement health check endpoint (GET /api/v1/health) returning service status.
+
+Use uptime monitoring (e.g., Pingdom) to ping health endpoint every minute.
+
+Log custom metrics (e.g., model save frequency) to InfluxDB or similar.
+
+Visualize dashboards in Grafana; update panels monthly to reflect new metrics.
+
+
+Retain analytics data for 12 months; purge older data automatically.
