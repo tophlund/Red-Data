@@ -1,0 +1,240 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Position {
+  QUARTERBACK
+  RUNNING_BACK
+  WIDE_RECEIVER
+  TIGHT_END
+  OFFENSIVE_LINE
+  DEFENSIVE_END
+  DEFENSIVE_TACKLE
+  LINEBACKER
+  CORNERBACK
+  SAFETY
+  KICKER
+  PUNTER
+  LONG_SNAPPER
+}
+
+enum MetricCategory {
+  PLAYER
+  TEAM
+  POSITION
+  REF
+  PLAYBOOK
+}
+
+enum GameStatus {
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  POSTPONED
+}
+
+// Core Entities
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  userModels    UserModel[]
+  aiSuggestions AiSuggestion[]
+
+  @@map("users")
+  @@index([isDeleted])
+}
+
+model Team {
+  id           String   @id @default(uuid())
+  name         String
+  abbreviation String   @unique @db.VarChar(5)
+  city         String
+  conference   String?
+  division     String?
+  logoUrl      String?
+  isDeleted    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  players   Player[]
+  homeGames Game[]   @relation("HomeTeam")
+  awayGames Game[]   @relation("AwayTeam")
+
+  @@map("teams")
+  @@index([conference, division])
+  @@index([isDeleted])
+}
+
+model Player {
+  id        String   @id @default(uuid())
+  name      String
+  position  Position
+  number    Int?
+  height    String?
+  weight    Int?
+  age       Int?
+  teamId    String
+  isActive  Boolean  @default(true)
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@map("players")
+  @@index([teamId])
+  @@index([position])
+  @@index([isDeleted])
+  @@index([teamId, isActive, isDeleted])
+}
+
+model Referee {
+  id        String   @id @default(uuid())
+  name      String
+  number    Int?     @unique
+  position  String? // Head Referee, Line Judge, etc.
+  yearsExp  Int?
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  games Game[]
+
+  @@map("referees")
+  @@index([isDeleted])
+}
+
+model Game {
+  id          String     @id @default(uuid())
+  gameDate    DateTime
+  week        Int?
+  season      Int
+  homeTeamId  String
+  awayTeamId  String
+  refereeId   String?
+  homeScore   Int?
+  awayScore   Int?
+  status      GameStatus @default(SCHEDULED)
+  venue       String?
+  temperature Int?
+  weather     String?
+  attendance  Int?
+  isDeleted   Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relations
+  homeTeam Team     @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam Team     @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  referee  Referee? @relation(fields: [refereeId], references: [id])
+
+  @@map("games")
+  @@index([gameDate])
+  @@index([season, week])
+  @@index([homeTeamId, awayTeamId])
+  @@index([isDeleted])
+  @@index([gameDate, isDeleted])
+}
+
+model Metric {
+  id          String         @id @default(uuid())
+  name        String         @unique
+  displayName String
+  description String?
+  category    MetricCategory
+  dataType    String         @default("number") // number, percentage, boolean, etc.
+  unit        String? // yards, points, percentage, etc.
+  isActive    Boolean        @default(true)
+  isDeleted   Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  // Relations
+  modelComponents ModelComponent[]
+
+  @@map("metrics")
+  @@index([category])
+  @@index([isActive, isDeleted])
+  @@index([category, isActive, isDeleted])
+}
+
+model UserModel {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  definition  Json // JSON structure containing model configuration
+  userId      String?
+  isPublic    Boolean  @default(false)
+  isListed    Boolean  @default(false) // For public model directory
+  shareToken  String?  @unique
+  isDeleted   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user            User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
+  modelComponents ModelComponent[]
+  aiSuggestions   AiSuggestion[]
+
+  @@map("user_models")
+  @@index([userId])
+  @@index([isPublic, isListed])
+  @@index([isDeleted])
+  @@index([userId, isDeleted])
+}
+
+model ModelComponent {
+  id       String  @id @default(uuid())
+  modelId  String
+  metricId String
+  weight   Float   @default(1.0)
+  isActive Boolean @default(true)
+
+  // Relations
+  model  UserModel @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  metric Metric    @relation(fields: [metricId], references: [id])
+
+  @@map("model_components")
+  @@index([modelId])
+  @@unique([modelId, metricId])
+}
+
+model AiSuggestion {
+  id               String   @id @default(uuid())
+  userId           String?
+  modelId          String?
+  context          String // User's input or context for the suggestion
+  suggestedMetrics Json   // Array of suggested metrics with reasoning
+  wasAccepted      Boolean  @default(false)
+  createdAt        DateTime @default(now())
+
+  // Relations
+  user  User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  model UserModel? @relation(fields: [modelId], references: [id], onDelete: SetNull)
+
+  @@map("ai_suggestions")
+  @@index([userId])
+  @@index([modelId])
+  @@index([createdAt])
+} 
